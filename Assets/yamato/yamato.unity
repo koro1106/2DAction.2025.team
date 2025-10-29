@@ -351,12 +351,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e889ea07a4f0954a8d922f3704ee2ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
+  maxHP: 10
   currentHP: 0
   damagePerSecond: 5
   gasParticles: {fileID: 222105921}
   maxEmissionRate: 100
   minEmissionRate: 5
+  deathParticlePrefab: {fileID: 3167219660506253581, guid: 5ea0a2e42bf50894dae245d9d98085c8, type: 3}
 --- !u!114 &222105926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2581,13 +2582,15 @@ GameObject:
   - component: {fileID: 1655580143}
   - component: {fileID: 1655580146}
   - component: {fileID: 1655580145}
+  - component: {fileID: 1655580147}
+  - component: {fileID: 1655580148}
   m_Layer: 0
   m_Name: kotai
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1655580143
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2649,8 +2652,8 @@ Transform:
   m_GameObject: {fileID: 1655580142}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.08, y: -4.05, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: -4.08, y: -4.0981, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.54625, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2670,7 +2673,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.3
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -2727,6 +2730,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.43, y: 2.08}
   m_EdgeRadius: 0
+--- !u!114 &1655580147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655580142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb1d63219f109b2458aad5d26d0c0dea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  jumpForce: 10
+  rollMultiplier: 360
+--- !u!58 &1655580148
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655580142}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1668153674
 GameObject:
   m_ObjectHideFlags: 0
