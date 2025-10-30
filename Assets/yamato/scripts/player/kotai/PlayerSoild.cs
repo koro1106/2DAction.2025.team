@@ -4,7 +4,7 @@ public class PlayerSolid : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
-    public float rollMultiplier = 360f; // 転がる回転速度の倍率
+    public float rollSpeed = 180f; // Box用は控えめ
 
     private Rigidbody2D rb;
     private bool isGrounded = false;
@@ -12,31 +12,35 @@ public class PlayerSolid : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-    }
+        // 地面から少し浮かせる
+        Vector3 pos = transform.position;
+        pos.y += 0.1f; // 0.1m上にずらす
+        transform.position = pos;
 
+        // 物理設定
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
+    }
     void Update()
     {
-        // 左右移動
         float horizontal = Input.GetAxisRaw("Horizontal");
+
+        // 横移動
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
 
-        // 回転（転がる表現）
+        // 擬似回転
         if (isGrounded && horizontal != 0)
-        {
-            float rotationAmount = -horizontal * moveSpeed * rollMultiplier * Time.deltaTime;
-            rb.MoveRotation(rb.rotation + rotationAmount);
-        }
+            rb.angularVelocity = -horizontal * rollSpeed;
+        else
+            rb.angularVelocity = 0;
 
         // ジャンプ
         if (isGrounded && Input.GetButtonDown("Jump"))
-        {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // 足元に接地判定
         foreach (ContactPoint2D contact in collision.contacts)
         {
             if (contact.normal.y > 0.5f)
@@ -49,7 +53,6 @@ public class PlayerSolid : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        // 接地判定をリセット
         isGrounded = false;
     }
 }
