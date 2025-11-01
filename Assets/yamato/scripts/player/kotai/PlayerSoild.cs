@@ -1,10 +1,10 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class PlayerSolid : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float jumpForce = 10f;
-    public float rollSpeed = 180f; // Box—p‚ÍT‚¦‚ß
+    public float moveSpeed = 3f;
+    public float jumpForce = 20f;
+    public float rollSpeed = 480f;
 
     private Rigidbody2D rb;
     private bool isGrounded = false;
@@ -12,29 +12,31 @@ public class PlayerSolid : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // ’n–Ê‚©‚ç­‚µ•‚‚©‚¹‚é
+
+        // åœ°é¢ã‹ã‚‰å°‘ã—æµ®ã‹ã›ã‚‹
         Vector3 pos = transform.position;
-        pos.y += 0.1f; // 0.1mã‚É‚¸‚ç‚·
+        pos.y += 0.1f;
         transform.position = pos;
 
-        // •¨—İ’è
+        // ç‰©ç†è¨­å®š
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
     }
+
     void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
 
-        // ‰¡ˆÚ“®
+        // æ¨ªç§»å‹•
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
 
-        // ‹[—‰ñ“]
-        if (isGrounded && horizontal != 0)
+        // å¸¸ã«å›è»¢ï¼ˆæ¥åœ°ã—ã¦ã„ãªãã¦ã‚‚ï¼‰
+        if (horizontal != 0)
             rb.angularVelocity = -horizontal * rollSpeed;
         else
             rb.angularVelocity = 0;
 
-        // ƒWƒƒƒ“ƒv
+        // ã‚¸ãƒ£ãƒ³ãƒ—
         if (isGrounded && Input.GetButtonDown("Jump"))
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
