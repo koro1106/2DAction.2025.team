@@ -3159,6 +3159,18 @@ PrefabInstance:
       propertyPath: InitialModule.startLifetime.scalar
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 3105523926371904552, guid: 1122efd94f427654f966bd97bc639d85, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3105523926371904552, guid: 1122efd94f427654f966bd97bc639d85, type: 3}
+      propertyPath: maxFloatSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3105523926371904552, guid: 1122efd94f427654f966bd97bc639d85, type: 3}
+      propertyPath: horizontalMaxSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3580637671485767954, guid: 1122efd94f427654f966bd97bc639d85, type: 3}
       propertyPath: maxHP
       value: 100
