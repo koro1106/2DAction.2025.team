@@ -1,67 +1,75 @@
 using UnityEngine;
+using UnityEngine.UI; // Sliderを使うために必要
 
 public class GasPlayer : MonoBehaviour
 {
     [Header("HP設定")]
-    public float maxHP = 100f;        // 最大HP（水量）
-    public float currentHP;           // 現在のHP
+    public float maxHP = 100f;
+    public float currentHP;
 
     [Header("ダメージ設定")]
-    public float damagePerSecond = 10f;  // 壁に触れている間に減るHP量
+    public float normalDamagePerSecond = 1f;
+    public float wallDamagePerSecond = 5f;
 
     [Header("Particle設定")]
-    public ParticleSystem gasParticles;   // プレイヤー本体の泡Particle
-    public float maxEmissionRate = 100f; // HP満タン時の泡の量
-    public float minEmissionRate = 0f;   // HP0時の泡の量（少なめにする）
+    public ParticleSystem gasParticles;
+    public float maxEmissionRate = 100f;
+    public float minEmissionRate = 0f;
 
     [Header("死亡エフェクト")]
-    public GameObject deathParticlePrefab; // HP0時に出すParticlePrefab
+    public GameObject deathParticlePrefab;
 
-    private ParticleSystem.EmissionModule emission; // 泡の量を制御するためのモジュール
-    private bool touchingWall = false;               // 壁に接触しているか
-    private bool isDead = false;                     // 既に死亡済みか判定するフラグ
+    [Header("UI設定")]
+    public Slider hpSlider; // ← SliderをInspectorでアサイン
+
+    private ParticleSystem.EmissionModule emission;
+    private bool touchingWall = false;
+    private bool isDead = false;
 
     void Start()
     {
-        // 初期HPを最大に設定
         currentHP = maxHP;
 
-        // ParticleがInspectorで未設定の場合は子オブジェクトから取得
         if (gasParticles == null)
             gasParticles = GetComponentInChildren<ParticleSystem>();
 
-        // Emissionモジュールを取得して、初期泡量をセット
         emission = gasParticles.emission;
         emission.rateOverTime = maxEmissionRate;
+
+        // ★ Slider初期設定
+        if (hpSlider != null)
+        {
+            hpSlider.maxValue = maxHP;
+            hpSlider.value = currentHP;
+        }
     }
 
     void Update()
     {
-        if (isDead) return; // 死亡済みならUpdate処理を停止
+        if (isDead) return;
 
-        // 壁に触れている場合、毎秒HPを減らす
-        if (touchingWall)
+        // HP減少処理
+        float damageRate = touchingWall ? wallDamagePerSecond : normalDamagePerSecond;
+        currentHP -= damageRate * Time.deltaTime;
+        currentHP = Mathf.Max(currentHP, 0f);
+
+        // 泡の量をHPに応じて変化
+        float hpRatio = currentHP / maxHP;
+        emission.rateOverTime = Mathf.Lerp(minEmissionRate, maxEmissionRate, hpRatio);
+
+        // ★ Slider更新
+        if (hpSlider != null)
         {
-            currentHP -= damagePerSecond * Time.deltaTime;
-            currentHP = Mathf.Max(currentHP, 0f); // HPが0未満にならないように制限
+            hpSlider.value = currentHP;
         }
 
-        // HPに応じて泡の量を線形補間で変更
-        float hpRatio = currentHP / maxHP; // 0～1
-        emission.rateOverTime = new ParticleSystem.MinMaxCurve(
-            Mathf.Lerp(minEmissionRate, maxEmissionRate, hpRatio)
-        );
-
-        // HPが0になったら死亡処理を呼ぶ
+        // HPが0になったら死亡処理
         if (currentHP <= 0f && !isDead)
         {
             Die();
         }
     }
 
-    // -------------------------
-    // 壁との接触を検知する関数
-    // -------------------------
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
@@ -74,22 +82,16 @@ public class GasPlayer : MonoBehaviour
             touchingWall = false;
     }
 
-    // -------------------------
-    // HP0になったときの死亡処理
-    // -------------------------
     void Die()
     {
-        isDead = true;       // 既に死亡したフラグを立てる
+        isDead = true;
+        gasParticles.Stop();
 
-        gasParticles.Stop(); // 元の泡Particleを止める
-
-        // 死亡用Particleを生成
         if (deathParticlePrefab != null)
         {
             Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
         }
 
-        // 2秒後にプレイヤーオブジェクトを消す
         Destroy(gameObject, 2f);
     }
 }
