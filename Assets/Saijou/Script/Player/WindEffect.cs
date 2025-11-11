@@ -4,10 +4,11 @@ using UnityEngine;
 /// </summary>
 public class WindEffect : MonoBehaviour
 {
-    public Vector2 windDir = new Vector2(-1, 0); // 風の方向（左方向）
     public float windStrength = 2f; // 風の強さ
     private bool isWindBlowing = false; // 風吹いてるか
     private Rigidbody2D rb;
+    public GameObject[] wind;
+    private WindDirection currentWind; // 今影響を受けている風
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -25,7 +26,7 @@ public class WindEffect : MonoBehaviour
     // 風の力をプレイヤーに加える
     void ApplyWindForce()
     {
-        rb.AddForce(windDir * windStrength);
+        rb.AddForce(currentWind.windDir * windStrength);
     }
 
     // 風の状態を切り替える関数
@@ -37,17 +38,38 @@ public class WindEffect : MonoBehaviour
     // 風の影響を受けるエリアに入ったら風を吹かせる
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("WindArea")) // 風エリアに入ったら
+        //if(other.CompareTag("WindArea")) // 風エリアに入ったら
+        //{
+        //    ToggleWind(true); // 風が吹くようにする
+        //    Debug.Log("エリア入った");
+
+        //}
+        // wind配列の中から、どの風エリアに入ったか調べる
+        for (int i = 0; i < wind.Length; i++)
         {
-            ToggleWind(true); // 風が吹くようにする
+            if (other.gameObject == wind[i])
+            {
+                currentWind = wind[i].GetComponent<WindDirection>();
+                ToggleWind(true);
+                Debug.Log($"風エリア {i + 1} に入った。方向: {currentWind.windDir}");
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if(other.CompareTag("WindArea")) // 風エリア出たら
+        //if(other.CompareTag("WindArea")) // 風エリア出たら
+        //{
+        //    ToggleWind(false); // 風止める
+        //}
+        for (int i = 0; i < wind.Length; i++)
         {
-            ToggleWind(false); // 風止める
+            if (other.gameObject == wind[i])
+            {
+                ToggleWind(false);
+                currentWind = null;
+                Debug.Log($"風エリア {i + 1} から出た");
+            }
         }
     }
 }
