@@ -37,24 +37,25 @@ public class PlayerSolid : MonoBehaviour
             rb.angularVelocity = 0;
 
         // ジャンプ
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        foreach (ContactPoint2D contact in collision.contacts)
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            if (contact.normal.y > 0.5f)
-            {
-                isGrounded = true;
-                break;
-            }
+            isGrounded = true;
         }
     }
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        isGrounded = false;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 }
