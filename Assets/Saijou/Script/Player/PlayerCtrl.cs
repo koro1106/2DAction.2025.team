@@ -27,6 +27,11 @@ public class PlayerCtrl : MonoBehaviour
         {
             isGrounded = true;
         }
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("“G‚ÆÚG");
+            // “G‚ÆÚG‚µ‚½‚Ìˆ—ij
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {

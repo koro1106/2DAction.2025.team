@@ -9,6 +9,7 @@ TagManager:
   - UpDownGround
   - Ground
   - WindArea
+  - Enemy
   layers:
   - Default
   - TransparentFX
