@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
@@ -8,8 +6,10 @@ public class PlayerShoot : MonoBehaviour
     public Transform firePoint;
     public float shootCooldown = 0.5f;
 
+    public float maxInitialSpeed = 20f; // ★これ以上速くしない
+
     float timer;
-    // Start is called before the first frame update
+
     void Update()
     {
         timer += Time.deltaTime;
@@ -23,12 +23,38 @@ public class PlayerShoot : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        Vector2 start = firePoint.position;
+        Vector2 peak = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // マウス方向に飛ばす例
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 dir = (mousePos - (Vector2)firePoint.position);
+        float g = Mathf.Abs(Physics2D.gravity.y);
 
-        bullet.GetComponent<Bullet>().SetDirection(dir);
+        Vector2 diff = peak - start;
+        float dx = diff.x;
+        float dy = diff.y;
+
+        // 頂点が発射位置以下なら、最低でも少し上に補正
+        if (dy <= 0) dy = 0.1f;
+
+        // 頂点に到達するための縦方向の初速度
+        float vy0 = Mathf.Sqrt(2 * g * dy);
+
+        // 頂点に到達するまでの時間
+        float t = vy0 / g;
+
+        // X方向の初速度（頂点のXに合わせる）
+        float vx0 = dx / t;
+
+        // 合成した初速度
+        Vector2 v = new Vector2(vx0, vy0);
+
+        // ★速度が速すぎる場合クランプ
+        if (v.magnitude > maxInitialSpeed)
+        {
+            v = v.normalized * maxInitialSpeed;
+        }
+
+        // 弾生成
+        GameObject bullet = Instantiate(bulletPrefab, start, Quaternion.identity);
+        bullet.GetComponent<Bullet>().SetVelocity(v);
     }
 }
