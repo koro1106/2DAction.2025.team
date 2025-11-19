@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class Bullet: MonoBehaviour
 {
-    public float speed = 10f;
+    //public float speed = 10f;
     public float lifeTime = 5f;
-    private Vector2 direction;
+    //private Vector2 direction;
 
-    public void SetDirection(Vector2 dir)
+    Rigidbody2D rb;
+
+    private void Awake()
     {
-        direction = dir.normalized;
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    public void SetVelocity(Vector2 velocity)
+    {
+        rb.velocity = velocity;
         Destroy(gameObject, lifeTime);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Translate(direction * speed * Time.deltaTime);
-    }
-
+  
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Destroy(gameObject);

@@ -7678,6 +7678,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1554800287}
     m_Modifications:
+    - target: {fileID: 28819898278697837, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
+      propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 633355633377372889, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4cc6d20ae6147e746953aaa9b839fb09, type: 3}
+    - target: {fileID: 633355633377372889, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 633355633377372889, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
+      propertyPath: m_Color.g
+      value: 0.15605724
+      objectReference: {fileID: 0}
+    - target: {fileID: 633355633377372889, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 723315303058805774, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 723315303058805774, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 723315303058805774, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.59326446
@@ -7721,6 +7749,10 @@ PrefabInstance:
     - target: {fileID: 7813440162789188843, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
       propertyPath: m_Name
       value: Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813440162789188843, guid: 99513fd44a50a1f41a511497bd2971a5, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8056,6 +8088,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 966919196}
   firePoint: {fileID: 1554800287}
   shootCooldown: 0.5
+  maxInitialSpeed: 20
 --- !u!1 &1554384040
 GameObject:
   m_ObjectHideFlags: 0
@@ -18930,7 +18963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7161944675621510811, guid: 3ed8ec60cfcac194f84ab6d2b63fee27, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.099999905
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 7161944675621510811, guid: 3ed8ec60cfcac194f84ab6d2b63fee27, type: 3}
       propertyPath: m_LocalPosition.z
