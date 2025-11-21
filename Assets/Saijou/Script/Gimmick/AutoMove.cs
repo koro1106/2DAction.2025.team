@@ -9,8 +9,6 @@ public class AutoMove : MonoBehaviour
     private Vector3 startPos;
     private Rigidbody2D rb;
 
-    [SerializeField] private GameObject player;
-
     private Vector3 oldPos;//maeno freamnoiti
     private Vector3 deltaPos;//idouryou
     void Start()
