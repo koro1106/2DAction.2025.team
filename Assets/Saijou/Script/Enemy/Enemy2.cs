@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy1 : MonoBehaviour
+public class Enemy2 : MonoBehaviour
 {
     [Header("移動速度")] public float speed = 3f;
-    [Header("右向きか")] public bool isRight = false;
+    [Header("往復距離")] public float distance = 3f;
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
+    private Vector2 startPos;
+    private int dir = 1; // 1:右　-1:左
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+
+        // 重力の影響無効
+        rb.gravityScale = 0;
+
+        startPos = transform.position; // スタート位置
     }
 
     void Update()
@@ -20,15 +27,12 @@ public class Enemy1 : MonoBehaviour
         // 画面に見えたら移動開始
         if (sr.isVisible)
         {
-           Debug.Log("敵が画面上に見えた");
+            rb.velocity = new Vector2(speed * dir, 0);
 
-            if (isRight)
+            if(Vector2.Distance(startPos, transform.position) >= distance)
             {
-                rb.velocity = new Vector2(speed, rb.velocity.y);
-            }
-            else
-            {
-                rb.velocity = new Vector2(-speed, rb.velocity.y);
+                dir *= -1; // 方向反転
+                startPos = transform.position; // 新しい位置に更新
             }
         }
         else
