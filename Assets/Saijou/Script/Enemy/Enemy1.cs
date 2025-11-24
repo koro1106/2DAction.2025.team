@@ -36,7 +36,12 @@ public class Enemy1 : MonoBehaviour
             // ‰æ–ÊŠO‚Å‚ÍŽ~‚ß‚Ä‚¨‚­
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
-
-
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("bullet"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

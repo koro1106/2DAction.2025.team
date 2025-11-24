@@ -50,5 +50,10 @@ public class Enemy4 : MonoBehaviour
         {
             isGround = true;
         }
+        
+        if (collision.gameObject.CompareTag("bullet"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
