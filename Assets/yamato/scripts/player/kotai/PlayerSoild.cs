@@ -57,5 +57,9 @@ public class PlayerSolid : MonoBehaviour
         {
             isGrounded = false;
         }
+        if (collision.gameObject.CompareTag("UpDownGround"))
+        {
+            isGrounded = false;
+        }
     }
 }
