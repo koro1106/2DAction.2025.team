@@ -35,5 +35,7 @@ public class SolidHP : MonoBehaviour
         isDead = true;
         // 固体死亡時の処理（必要なら）
         Destroy(gameObject, 1f);
+
+        Debug.Log("死にました");
     }
 }
