@@ -7,21 +7,10 @@ public class SlimeMove1 : MonoBehaviour
     //  パラメータ
     // ===========================
 
-    // 横移動のスピード
-    public float speed = 3f;
-
-    // ジャンプの強さ（SoftJumpで使う）
-    public float jumpForce = 40f;
-
-    // 地面チェック用の距離
-    public float groundCheckDistance = 1.0f;
-
-    // 地面判定に使うレイヤー
-    public LayerMask groundLayer;
-
-    // 着地エフェクト（インスペクタで設定）
-    public ParticleSystem landingEffect;
-
+    public float speed = 3f;         // 横移動のスピード
+    public float jumpForce = 40f;    // ジャンプの強さ
+    public float groundCheckDistance = 1.0f; // 地面チェック距離
+    public ParticleSystem landingEffect;     // 着地エフェクト（Inspectorで設定）
 
     // ===========================
     //  内部変数
@@ -32,12 +21,10 @@ public class SlimeMove1 : MonoBehaviour
     private bool wasGround = false;  // 前フレームの地面判定
     private bool isJumping = false;  // SoftJump連続防止
 
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-
 
     void Update()
     {
@@ -47,22 +34,19 @@ public class SlimeMove1 : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(x * speed, rb.velocity.y);
 
-
         // -------------------------------
-        // ■ 地面判定
+        // ■ 地面判定（Tag判定）
         // -------------------------------
         wasGround = isGround; // 前フレームを保存
 
-        isGround = Physics2D.Raycast(
+        RaycastHit2D hit = Physics2D.Raycast(
             new Vector2(transform.position.x, transform.position.y - 0.5f),
             Vector2.down,
-            groundCheckDistance,
-            groundLayer
+            groundCheckDistance
         );
 
-        // Debugログ
-        // Debug.Log("GROUND = " + isGround);
-
+        // Rayが当たっていてTagが"Ground"なら地面と判定
+        isGround = (hit.collider != null && hit.collider.CompareTag("Ground"));
 
         // -------------------------------
         // ■ ★ 地面から離れ → 着地した瞬間 Particle
@@ -73,7 +57,6 @@ public class SlimeMove1 : MonoBehaviour
                 landingEffect.Play(); // 1回だけ再生
         }
 
-
         // -------------------------------
         // ■ ジャンプ処理（地面にいる時だけ）
         // -------------------------------
@@ -82,7 +65,6 @@ public class SlimeMove1 : MonoBehaviour
             StartCoroutine(SoftJump());
         }
     }
-
 
     // =====================================================
     // ■ 柔らかジャンプ（AddForceを 0.1秒 かけて分散）
@@ -97,7 +79,7 @@ public class SlimeMove1 : MonoBehaviour
         while (timer < duration)
         {
             // AddForce を分散して "ふわっ" とジャンプ
-            rb.AddForce(Vector2.up * jumpForce * 0.45f * Time.deltaTime * 60f,
+            rb.AddForce(Vector2.up * jumpForce * 0.4f * Time.deltaTime * 60f,
                         ForceMode2D.Force);
 
             timer += Time.deltaTime;
@@ -109,7 +91,6 @@ public class SlimeMove1 : MonoBehaviour
 
         isJumping = false;
     }
-
 
     // =====================================================
     // ■ Sceneビューで Ray を可視化（デバッグ）
