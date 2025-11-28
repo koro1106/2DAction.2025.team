@@ -4,13 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - platform
+  - Enemy
   - Wall
-  - UpDownGround
+  - bullet
   - Ground
   - WindArea
-  - Enemy
-  - bullet
+  - LiquidToSolid
+  - SolidToGas
+  - GasToLiquid
   layers:
   - Default
   - TransparentFX
@@ -18,14 +19,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Fluids
-  - bullet
-  - Player
-<<<<<<< HEAD
-  - PosyPro
-=======
-  - Ground
->>>>>>> yamato
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
