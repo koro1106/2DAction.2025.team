@@ -12,6 +12,7 @@ TagManager:
   - LiquidToSolid
   - SolidToGas
   - GasToLiquid
+  - UpDownGround
   layers:
   - Default
   - TransparentFX

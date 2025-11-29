@@ -13,7 +13,8 @@ public class SolidHP : MonoBehaviour
 
     void Start()
     {
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        currentHP = maxHP;
+        //currentHP = Mathf.Clamp(currentHP, 0, maxHP);
     }
 
     void Update()
@@ -34,7 +35,7 @@ public class SolidHP : MonoBehaviour
     {
         isDead = true;
         // 固体死亡時の処理（必要なら）
-        Destroy(gameObject, 1f);
+        Destroy(gameObject);
 
         Debug.Log("死にました");
     }
