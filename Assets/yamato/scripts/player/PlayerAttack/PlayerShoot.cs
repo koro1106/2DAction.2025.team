@@ -10,10 +10,12 @@ public class PlayerShoot : MonoBehaviour
     public float gravityScale = 1f;     // 重力の強さ（上下に動く）
     public float maxInitialSpeed = 20f; // 速度上限
 
+    public StartPerformance startPerformance;
     float timer;
 
     void Update()
     {
+        if (!startPerformance.preformanceFinished) return;
         timer += Time.deltaTime;
 
         if (Input.GetButtonDown("Fire1") && timer > shootCooldown)
