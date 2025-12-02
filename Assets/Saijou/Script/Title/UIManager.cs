@@ -29,5 +29,6 @@ public class UIManager : MonoBehaviour
     public void OnStartButton()
     {
         startPf.GameStart();
+        Debug.Log("スタートボタン押された");
     }
 }
