@@ -13,6 +13,10 @@ TagManager:
   - SolidToGas
   - GasToLiquid
   - UpDownGround
+  - platform
+  - ToLiquid
+  - ToSolid
+  - ToGas
   layers:
   - Default
   - TransparentFX
