@@ -24,8 +24,8 @@ public class RotateUI : MonoBehaviour
             {
                 passed[i] = true;
                 // 90“x‰ñ“]
-                targetRotateZ += 90f;
-                Debug.Log("‚X‚O“x‰ñ“]‚³‚¹");
+                targetRotateZ += 45f;
+                Debug.Log("45“x‰ñ“]‚³‚¹");
             }
         }
 
