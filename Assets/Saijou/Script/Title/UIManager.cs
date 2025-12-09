@@ -7,14 +7,20 @@ public class UIManager : MonoBehaviour
     public GameObject options;
     public GameObject userGuides;
     public StartPerformance startPf;
+    public UIMove move;
+
+   
     //ƒIƒvƒVƒ‡ƒ“‰æ–Ê
     public void OnOptionButton()
     {
-        options.SetActive(true);
+        move.upMoving = true;
+        //options.SetActive(true);
+
     }
     public void OnOptionBackButton()
     {
-        options.SetActive(false);
+        move.downMoving = true;
+        //options.SetActive(false);
     }
     //‘€ìà–¾‰æ–Ê
     public void OnUserGideButton()
