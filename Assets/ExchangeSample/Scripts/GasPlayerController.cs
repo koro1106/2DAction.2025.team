@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace ExchangeSample.Scripts
 {
@@ -6,7 +6,7 @@ namespace ExchangeSample.Scripts
     {
         //  他状態(Liquid/Gas)の位置同期をさせるため
         [SerializeField] private Character rootCharacter;   //  親のCharacter
-
+        
         [Header("Movement Setting")]
         public float moveSpeed = 5f;        // ����������
         public float floatForce = 3f;       // �㏸��
@@ -78,7 +78,7 @@ namespace ExchangeSample.Scripts
 
             rb.velocity = velocity;
         }
-
+        
         //  状態変化用トリガーに接触
         private void OnTriggerEnter2D(Collider2D other)
         {

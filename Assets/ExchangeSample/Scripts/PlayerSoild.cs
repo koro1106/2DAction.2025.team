@@ -1,13 +1,13 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 namespace ExchangeSample.Scripts
 {
     public class PlayerSolid : MonoBehaviour
     {
-        //  ‘¼ó‘Ô(Liquid/Gas)‚ÌˆÊ’u“¯Šú‚ğ‚³‚¹‚é‚½‚ß
-        [SerializeField] private Character rootCharacter;   //  e‚ÌCharacter
-
+        //  ä»–çŠ¶æ…‹(Liquid/Gas)ã®ä½ç½®åŒæœŸã‚’ã•ã›ã‚‹ãŸã‚
+        [SerializeField] private Character rootCharacter;   //  è¦ªã®Character
+        
         public float moveSpeed = 3f;
         public float jumpForce = 20f;
         public float rollSpeed = 480f;
@@ -19,12 +19,12 @@ namespace ExchangeSample.Scripts
         {
             rb = GetComponent<Rigidbody2D>();
 
-            // ’n–Ê‚©‚ç­‚µ•‚‚©‚¹‚é
+            // åœ°é¢ã‹ã‚‰å°‘ã—æµ®ã‹ã›ã‚‹
             Vector3 pos = transform.position;
             pos.y += 0.1f;
             transform.position = pos;
 
-            // •¨—İ’è
+            // ç‰©ç†è¨­å®š
             rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
         }
@@ -33,16 +33,16 @@ namespace ExchangeSample.Scripts
         {
             float horizontal = Input.GetAxisRaw("Horizontal");
 
-            // ‰¡ˆÚ“®
+            // æ¨ªç§»å‹•
             rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
 
-            // í‚É‰ñ“]iÚ’n‚µ‚Ä‚¢‚È‚­‚Ä‚àj
+            // å¸¸ã«å›è»¢ï¼ˆæ¥åœ°ã—ã¦ã„ãªãã¦ã‚‚ï¼‰
             if (horizontal != 0)
                 rb.angularVelocity = -horizontal * rollSpeed;
             else
                 rb.angularVelocity = 0;
 
-            // ƒWƒƒƒ“ƒv
+            // ã‚¸ãƒ£ãƒ³ãƒ—
             if (isGrounded && Input.GetKeyDown(KeyCode.Space))
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -63,19 +63,19 @@ namespace ExchangeSample.Scripts
             {
                 isGrounded = false;
             }
-            //  [UpDownGround]‚Æ‚¢‚¤Tag‚ª“o˜^‚³‚ê‚Ä‚¨‚ç‚¸A‚±‚Ì”»’è‚ÅƒGƒ‰[‚É‚È‚Á‚Ä‚¢‚é
-#if false
+            //  [UpDownGround]ã¨ã„ã†TagãŒç™»éŒ²ã•ã‚Œã¦ãŠã‚‰ãšã€ã“ã®åˆ¤å®šã§ã‚¨ãƒ©ãƒ¼ã«ãªã£ã¦ã„ã‚‹
+            #if false
             if (collision.gameObject.CompareTag("UpDownGround"))
             {
                 isGrounded = false;
             }
-#endif
+            #endif
         }
 
-        //  ó‘Ô•Ï‰»—pƒgƒŠƒK[‚ÉÚG
+        //  çŠ¶æ…‹å¤‰åŒ–ç”¨ãƒˆãƒªã‚¬ãƒ¼ã«æ¥è§¦
         private void OnTriggerEnter2D(Collider2D other)
         {
-            //  ©•ª©g‚É•Ï‰»‚³‚¹‚È‚¢‚æ‚¤‚É”»’è
+            //  è‡ªåˆ†è‡ªèº«ã«å¤‰åŒ–ã•ã›ãªã„ã‚ˆã†ã«åˆ¤å®š
             if (!other.gameObject.CompareTag("ToSolid"))
             {
                 rootCharacter.ChangeCharacter(other.gameObject.tag, transform.position);
