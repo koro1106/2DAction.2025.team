@@ -1,13 +1,13 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 namespace ExchangeSample.Scripts
-{/*
-    public class SlimeMove2 : MonoBehaviour
+{
+    public class SlimeMove : MonoBehaviour
     {
         //  他状態(Liquid/Gas)の位置同期をさせるため
         [SerializeField] private Character rootCharacter;   //  親のCharacter
-
+        
         // ===========================
         //  �p�����[�^
         // ===========================
@@ -37,7 +37,7 @@ namespace ExchangeSample.Scripts
             // �� ���ړ�
             // -------------------------------
             float x = Input.GetAxis("Horizontal");
-            rb.linearVelocity = new Vector2(x * speed, rb.linearVelocity.y);
+            rb.velocity = new Vector2(x * speed, rb.velocity.y);
 
             // -------------------------------
             // �� �n�ʔ���iTag����j
@@ -107,7 +107,7 @@ namespace ExchangeSample.Scripts
                 new Vector3(transform.position.x, transform.position.y - 0.5f - groundCheckDistance)
             );
         }
-
+        
         //  状態変化用トリガーに接触
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -118,6 +118,4 @@ namespace ExchangeSample.Scripts
             }
         }
     }
-}
-    */
 }
