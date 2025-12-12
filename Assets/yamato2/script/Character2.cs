@@ -1,7 +1,7 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 namespace ExchangeSample.Scripts
 {
     public enum CharacterType
@@ -11,7 +11,7 @@ namespace ExchangeSample.Scripts
         Gas
     }
 
-    public class Character : MonoBehaviour
+    public class Character2 : MonoBehaviour
     {
         [SerializeField] private List<GameObject> CharacterList;
         private CharacterType characterType;
@@ -54,4 +54,4 @@ namespace ExchangeSample.Scripts
             CharacterList[(int)characterType].transform.position = position;
         }
     }
-}
+}*/
