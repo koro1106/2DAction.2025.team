@@ -15,7 +15,9 @@ public class PlayerCamera: MonoBehaviour
             {
                 // プレイヤーの位置を追従（X座標のみ）
                 float newX = Mathf.Lerp(transform.position.x, player.position.x, followSpeed * Time.deltaTime);
-                transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+                float newY = Mathf.Lerp(transform.position.y, player.position.y, followSpeed * Time.deltaTime);
+
+                transform.position = new Vector3(newX, newY, transform.position.z);
             }
         }
        
