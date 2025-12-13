@@ -1092,6 +1092,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6764762619868225984, guid: 02c28a1c92018b843a23ece736113481, type: 3}
   m_PrefabInstance: {fileID: 721366418}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1261843464 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2355075321989224553, guid: 5232c42497debec43b509566ae3882f1, type: 3}
+  m_PrefabInstance: {fileID: 3462189721824395550}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1789074913 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8528603184288887991, guid: 5232c42497debec43b509566ae3882f1, type: 3}
+  m_PrefabInstance: {fileID: 3462189721824395550}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1795452448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,13 +1308,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6338656174932053596, guid: 5232c42497debec43b509566ae3882f1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9124672399667688703}
   m_SourcePrefab: {fileID: 100100000, guid: 5232c42497debec43b509566ae3882f1, type: 3}
 --- !u!1 &9124672399667688699 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6338656174932053596, guid: 5232c42497debec43b509566ae3882f1, type: 3}
   m_PrefabInstance: {fileID: 3462189721824395550}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9124672399667688703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9124672399667688699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8e0f53eca575f48a281da4d667705e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 1261843464}
+  firePoint: {fileID: 1789074913}
+  crosshairUI: {fileID: 1197854776725364329, guid: 4a0fe6186a139db44886dc9a6629e167, type: 3}
+  shootCooldown: 0.5
+  gravityScale: 1
+  maxInitialSpeed: 20
+  startPerformance: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
