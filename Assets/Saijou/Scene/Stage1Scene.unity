@@ -529,6 +529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windStrength: 30
   wind: []
+  player: {fileID: 0}
 --- !u!1001 &464687067
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1316,11 +1317,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5958582426342819001, guid: ca26a8557bc170c4da511781487d7b34, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: -15.48
       objectReference: {fileID: 0}
     - target: {fileID: 5958582426342819001, guid: ca26a8557bc170c4da511781487d7b34, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.8
+      value: 0.41
       objectReference: {fileID: 0}
     - target: {fileID: 5958582426342819001, guid: ca26a8557bc170c4da511781487d7b34, type: 3}
       propertyPath: m_LocalPosition.z
