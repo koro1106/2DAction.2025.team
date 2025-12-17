@@ -21,18 +21,22 @@ namespace ExchangeSample.Scripts
         private Rigidbody2D rb;
         private Vector2 moveInput;
 
-        [Header("Wind Setting")]
-        public float windDragMultiplier = 0.2f; // 風中の drag 倍率
         private bool isInWind = false;
-        private Vector2 externalVelocity; // 風の外力
+        private ParticleSystem ps; // パーティクルシステム
+        public WindEffect windEffect;
+        private WindDirection currentWind;
 
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
             rb.gravityScale = 0f;
             rb.drag = 0f; // drag�͎���Ŏ���
-        }
 
+            ps = GetComponent<ParticleSystem>();
+            var emission = ps.emission;
+            emission.rateOverTime = 60f; //  粒をどれくらいの頻度で出すかを固定
+        }
+       
         private void Update()
         {
             float moveX = Input.GetAxisRaw("Horizontal");
@@ -93,66 +97,43 @@ namespace ExchangeSample.Scripts
 
         private void FixedUpdate()
         {
-            // 現在の Rigidbody の速度
             Vector2 velocity = rb.velocity;
 
-            // -----------------------------
-            // 外力を加える（WindEffect からの加算）
-            // -----------------------------
-            velocity += externalVelocity;
-            // externalVelocity はここではリセットせず、WindEffect が毎フレーム加算する想定
+            // -------- 横移動 --------
+            float targetX = moveInput.x * horizontalMaxSpeed; // 入力に応じた目標速度
+            velocity.x = Mathf.Lerp(velocity.x, targetX, drag * Time.fixedDeltaTime);
 
-            // -----------------------------
-            // 横移動（プレイヤー入力）
-            // -----------------------------
-            if (moveInput.x > 0f)
-                velocity.x += moveSpeed * Time.fixedDeltaTime;
-            else if (moveInput.x < 0f)
-                velocity.x -= moveSpeed * Time.fixedDeltaTime;
-            else if (!isInWind)
-                // 風中でなければ減速
-                velocity.x = Mathf.Lerp(velocity.x, 0f, drag * Time.fixedDeltaTime);
-
-            // 横方向速度の最大値
-            float maxX = isInWind ? horizontalMaxSpeed * 5f : horizontalMaxSpeed;
-            velocity.x = Mathf.Clamp(velocity.x, -maxX, maxX);
-
-            // -----------------------------
-            // 縦移動（プレイヤー入力）
-            // -----------------------------
+            // -------- 縦移動 --------
+            float targetY = 0f;
             if (moveInput.y > 0f)
-                velocity.y += floatForce * Time.fixedDeltaTime;
+                targetY = maxFloatSpeed;       // 上方向の最大速度
             else if (moveInput.y < 0f)
-                velocity.y -= descendForce * Time.fixedDeltaTime;
-            else if (!isInWind)
-                velocity.y = Mathf.Lerp(velocity.y, 0f, drag * Time.fixedDeltaTime);
+                targetY = -maxDescendSpeed;    // 下方向の最大速度
+            else
+                targetY = 0f;                  // キーを押していなければ減速
 
-            // -----------------------------
-            // Rigidbody に反映
-            // -----------------------------
+            velocity.y = Mathf.Lerp(velocity.y, targetY, drag * Time.fixedDeltaTime);
+
+            // -------- 風の影響 --------
+            //if (isInWind && currentWind != null)
+            //{
+            //    // 風の影響を速度に直接加算
+            //    velocity += currentWind.windDir.normalized * windEffect.windStrength * Time.fixedDeltaTime;
+            //}
+
+            // -------- 最大速度制限 --------
+            velocity.x = Mathf.Clamp(velocity.x, -horizontalMaxSpeed, horizontalMaxSpeed);
+            velocity.y = Mathf.Clamp(velocity.y, -maxDescendSpeed, maxFloatSpeed);
+
             rb.velocity = velocity;
-
-            // -----------------------------
-            // 外力はここではリセットしない
-            // WindEffect 側で毎フレーム加算される
-            // -----------------------------
         }
 
 
-
-
-        // 風状態を受け取る関数
+        // --- 風状態 ---
         public void SetWindState(bool inWind)
         {
             isInWind = inWind;
-            if (!inWind)
-                externalVelocity = Vector2.zero; // 風が止まったら外力もゼロ
         }
-        public void AddExternalVelocity(Vector2 v)
-        {
-            externalVelocity += v;
-        }
-
 
         //  状態変化用トリガーに接触
         private void OnTriggerEnter2D(Collider2D other)
