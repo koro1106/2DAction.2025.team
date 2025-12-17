@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class playerBullet : MonoBehaviour
 {
     public float lifeTime = 5f;
     Rigidbody2D rb;
