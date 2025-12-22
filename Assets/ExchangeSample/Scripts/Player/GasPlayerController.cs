@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace ExchangeSample.Scripts
@@ -24,7 +25,7 @@ namespace ExchangeSample.Scripts
         private bool isInWind = false;
         private ParticleSystem ps; // パーティクルシステム
         public WindEffect windEffect;
-        private WindDirection currentWind;
+        private WindDirection currentWind = null;
 
         private void Start()
         {
@@ -120,6 +121,11 @@ namespace ExchangeSample.Scripts
             //    // 風の影響を速度に直接加算
             //    velocity += currentWind.windDir.normalized * windEffect.windStrength * Time.fixedDeltaTime;
             //}
+            //  風の影響(HORIKOSHI Masahiro)
+            if (currentWind != null)
+            {
+                velocity += currentWind.windDir * Time.fixedDeltaTime;
+            }
 
             // -------- 最大速度制限 --------
             velocity.x = Mathf.Clamp(velocity.x, -horizontalMaxSpeed, horizontalMaxSpeed);
@@ -135,14 +141,30 @@ namespace ExchangeSample.Scripts
             isInWind = inWind;
         }
 
-        //  状態変化用トリガーに接触
+        //  コライダー(Trigger)に入った際に呼び出される
         private void OnTriggerEnter2D(Collider2D other)
         {
             Debug.Log("GasPlayer TriggerEnter: " + other.name);
+            
+            //  WindAreaだった場合、情報を受け取る(HORIKOSHI Masahiro)
+            if (other.gameObject.CompareTag("WindArea"))
+            {
+                currentWind = other.GetComponent<WindDirection>();
+            }
             //  自分自身に変化させないように判定
-            if (!other.gameObject.CompareTag("ToGas"))
+            else if (!other.gameObject.CompareTag("ToGas"))
             {
                 rootCharacter.ChangeCharacter(other.gameObject.tag, transform.position);
+            }
+        }
+
+        //  コライダー(Trigger)から抜けた際に呼び出される(HORIKOSHI Masahiro)
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            //  WindAreaから抜けた場合、情報をクリアする
+            if (other.gameObject.CompareTag("WindArea"))
+            {
+                currentWind = null;
             }
         }
     }

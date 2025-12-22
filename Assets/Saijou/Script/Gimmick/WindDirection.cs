@@ -5,5 +5,5 @@ using UnityEngine;
 public class WindDirection : MonoBehaviour
 {
     public Vector2 windDir = new Vector2(-1, 0); // •—‚Ì•ûŒüi¶•ûŒüj
-
 }
+

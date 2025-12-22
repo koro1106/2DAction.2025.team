@@ -175,3 +175,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799f263502abf324b97de7892c15d9c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windDir: {x: -1, y: 0}
