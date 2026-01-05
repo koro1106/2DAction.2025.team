@@ -140,42 +140,42 @@ namespace ExchangeSample.Scripts
 
         private void FixedUpdate()
         {
-            //if (currentWind != null && player != null)
-            //{
-            //    // 風方向に力を加える
-            //    Vector2 force = currentWind.windDir.normalized * windStrength;
-            //    player.GetComponent<Rigidbody2D>()
-            //          .AddForce(force, ForceMode2D.Force);
-            //}
+            if (currentWind != null && player != null)
+            {
+                // 風方向に力を加える
+                Vector2 force = currentWind.windDir.normalized * windStrength;
+                player.GetComponent<Rigidbody2D>()
+                      .AddForce(force, ForceMode2D.Force);
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            //WindDirection wind = other.GetComponent<WindDirection>();
-            //if (wind == null) return;
+            WindDirection wind = other.GetComponent<WindDirection>();
+            if (wind == null) return;
 
-            //currentWind = wind;
+            currentWind = wind;
 
-            //if (player != null)
-            //    player.SetWindState(true);
+            if (player != null)
+                player.SetWindState(true);
 
-            //Debug.Log($"風エリアに入った: {wind.windDir}");
+            Debug.Log($"風エリアに入った: {wind.windDir}");
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            //WindDirection wind = other.GetComponent<WindDirection>();
-            //if (wind == null) return;
+            WindDirection wind = other.GetComponent<WindDirection>();
+            if (wind == null) return;
 
-            //if (currentWind == wind)
-            //{
-            //    currentWind = null;
+            if (currentWind == wind)
+            {
+                currentWind = null;
 
-            //    if (player != null)
-            //        player.SetWindState(false);
+                if (player != null)
+                    player.SetWindState(false);
 
-            //    Debug.Log($"風エリアから出た");
-            //}
+                Debug.Log($"風エリアから出た");
+            }
         }
     }
 }
