@@ -1,27 +1,36 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerRespawn : MonoBehaviour
 {
     private Vector3 currentSavePoint;
-    // Start is called before the first frame update
+    public ScreenFader screenFader;
+
     void Start()
     {
-        //STAGE開始地点をセーブポイントにする
         currentSavePoint = transform.position;
     }
 
-    public void SetSavePoint (Vector3 newSavePoint)
+    public void SetSavePoint(Vector3 newSavePoint)
     {
         currentSavePoint = newSavePoint;
         Debug.Log("新しいセーブポイント確保: " + newSavePoint);
-
     }
-    // Update is called once per frame
-   public  void Die()
+
+    public void Die()
     {
-        // HP処理や演出が終わった後に呼ぶ
+        StartCoroutine(RespawnCoroutine());
+    }
+
+    IEnumerator RespawnCoroutine()
+    {
+        // 画面暗転
+        yield return StartCoroutine(screenFader.FadeOut());
+
+        // リスポーン
         transform.position = currentSavePoint;
+
+        // 画面明転
+        yield return StartCoroutine(screenFader.FadeIn());
     }
 }
