@@ -7,7 +7,7 @@ public class PlayerCamera: MonoBehaviour
     public float followSpeed = 5f;  // 追従のスピード
     public StartPerformance startPerformance;
 
-    private const float followStartY = 11f; // 追従開始Y
+    private const float followStartY = 9f; // 追従開始Y
     private const float fixedY = -1f;       // 固定Y
 
     // 表示されてるプレイヤー取得
