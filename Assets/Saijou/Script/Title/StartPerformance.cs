@@ -13,6 +13,12 @@ public class StartPerformance : MonoBehaviour
     private bool isFading = false; // フェードが開始されたかどうか
     private bool isMovingCamera = false; // カメラ移動が開始されたかどうか
 
+    [SerializeField] private GameObject player; // プレイヤー
+
+    private void Start()
+    {
+        ResetPerformance(); // リセット
+    }
     private void Update()
     {
         //　ゲーム開始ボタンでフェードアウト開始
@@ -28,6 +34,8 @@ public class StartPerformance : MonoBehaviour
             }
         }
 
+        if (preformanceFinished) uiCanvasGroup.alpha = 1f; // フェード終わったら１に戻す
+
         //　ゲーム開始ボタンでカメラ移動開始
         if (isMovingCamera && !preformanceFinished)
         {
@@ -39,9 +47,9 @@ public class StartPerformance : MonoBehaviour
             if (camera.transform.position.x > endX )
             {
                 Debug.Log("目標地点到着");
-                // タイトルUI非表示
-                titleUI.SetActive(false); ;
+                titleUI.SetActive(false); // タイトルUI非表示
                 preformanceFinished = true; // スタート演出終了
+                isMovingCamera = false;         // 移動停止
             }
         }
        
@@ -49,11 +57,21 @@ public class StartPerformance : MonoBehaviour
 
     public void GameStart()
     {
+        ResetPerformance(); // リセット
+
       // スタートボタン押されたらフェード開始
-      if(!isFading)
-      {
-         isFading = true;
-         isMovingCamera = true;
-      }
+       isFading = true;
+       isMovingCamera = true;
+
+        // プレイヤー表示
+        player.SetActive(true);
+    }
+
+    // 演出用フラグ・状態をリセット
+    void ResetPerformance()
+    {
+        preformanceFinished = false;
+        isFading = false;
+        isMovingCamera = false;
     }
 }
