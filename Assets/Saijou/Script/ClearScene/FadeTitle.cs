@@ -14,6 +14,9 @@ public class FadeTitle : MonoBehaviour
     [SerializeField] float fadeTime = 1.0f;
     [SerializeField] GameObject titileButton; // タイトルボタン
     [SerializeField] GameObject titileUI;     // タイトルUI
+
+    [SerializeField] private Transform startPoint; // スタート位置
+    [SerializeField] private Rigidbody2D rb;
     public void OnTitleButton()
     {
         StartCoroutine(FadeSequence());
@@ -31,10 +34,13 @@ public class FadeTitle : MonoBehaviour
         titileButton.SetActive(false);
         titileUI.SetActive(true);
 
+        // スタート地点にプレイヤーワープ
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.transform.position = startPoint.position;
+
         // フェードイン(明るく)
         yield return StartCoroutine(Fade(1f, 0f));
-
-
     }
 
     public IEnumerator Fade(float start, float end)

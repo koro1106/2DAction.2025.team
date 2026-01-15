@@ -17,6 +17,7 @@ TagManager:
   - ToLiquid
   - ToSolid
   - ToGas
+  - Clear
   layers:
   - Default
   - TransparentFX
