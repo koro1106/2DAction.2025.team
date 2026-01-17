@@ -30,6 +30,13 @@ public class PlayerRespawn : MonoBehaviour
         // ƒŠƒXƒ|[ƒ“
         transform.position = currentSavePoint;
 
+        // HP‰ñ•œ
+        PlayerHP hp = GetComponent<PlayerHP>();
+        if (hp != null)
+        {
+            hp.ResetHP();
+        }
+
         // ‰æ–Ê–¾“]
         yield return StartCoroutine(screenFader.FadeIn());
     }
