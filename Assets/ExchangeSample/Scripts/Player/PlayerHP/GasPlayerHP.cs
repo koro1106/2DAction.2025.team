@@ -19,55 +19,60 @@ public class GasPlayer : MonoBehaviour
     [Header("死亡エフェクト")]
     public GameObject deathParticlePrefab;
 
-    [Header("UI設定")]
-    public Slider hpSlider; // ← SliderをInspectorでアサイン
-
+    
     private ParticleSystem.EmissionModule emission;
     private bool touchingWall = false;
     private bool isDead = false;
 
+    PlayerHP playerHP;
+    PlayerRespawn respawn;
+
+
     void Start()
     {
-        currentHP = maxHP;
+        playerHP = GetComponentInParent<PlayerHP>();
+        respawn = GetComponentInParent<PlayerRespawn>();
 
-        if (gasParticles == null)
-            gasParticles = GetComponentInChildren<ParticleSystem>();
 
-        emission = gasParticles.emission;
-        emission.rateOverTime = maxEmissionRate;
-
-        // ★ Slider初期設定
-        if (hpSlider != null)
+        if (playerHP == null)
         {
-            hpSlider.maxValue = maxHP;
-            hpSlider.value = currentHP;
+            Debug.LogError("PlayerHP が付いていません！");
         }
     }
 
     void Update()
     {
-        if (isDead) return;
+        if (playerHP == null) return;
+
 
         // HP減少処理
         float damageRate = touchingWall ? wallDamagePerSecond : normalDamagePerSecond;
-        currentHP -= damageRate * Time.deltaTime;
-        currentHP = Mathf.Max(currentHP, 0f);
+        playerHP.Damage(damageRate * Time.deltaTime);
 
         // 泡の量をHPに応じて変化
-        float hpRatio = currentHP / maxHP;
+        float hpRatio = playerHP.currentHP / playerHP.maxHP;
+        float rate = Mathf.Lerp(minEmissionRate, maxEmissionRate, hpRatio);
+
+
+        // 毎フレーム取り直す（これが超重要）
+        var emission = gasParticles.emission;
         emission.rateOverTime = Mathf.Lerp(minEmissionRate, maxEmissionRate, hpRatio);
 
-        // ★ Slider更新
-        if (hpSlider != null)
+        // 死亡チェック（Particle用）
+        if (playerHP.currentHP <= 0)
         {
-            hpSlider.value = currentHP;
-        }
+            gasParticles.Stop();
 
-        // HPが0になったら死亡処理
-        if (currentHP <= 0f && !isDead)
+            if (deathParticlePrefab != null)
+                Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
+            enabled = false; // 演出停止だけ
+        }
+        if (playerHP.currentHP <= 0 && !isDead)
         {
+            isDead = true;
             Die();
         }
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -91,7 +96,6 @@ public class GasPlayer : MonoBehaviour
         {
             Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
         }
-
-        Destroy(gameObject, 2f);
+        respawn.Die();
     }
 }
