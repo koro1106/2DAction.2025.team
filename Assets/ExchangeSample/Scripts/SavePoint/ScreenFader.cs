@@ -28,6 +28,8 @@ public class ScreenFader : MonoBehaviour
 
     public IEnumerator FadeIn()
     {
+
+
         StopAllCoroutines();
 
         Color color = fadeImage.color;
@@ -36,15 +38,19 @@ public class ScreenFader : MonoBehaviour
         {
             color.a -= Time.unscaledDeltaTime * fadeSpeed;
             fadeImage.color = color;
+
+            // ã≠êßìIÇ…0
+            fadeImage.color = new Color(
+                fadeImage.color.r,
+                fadeImage.color.g,
+                fadeImage.color.b,
+                0f
+            );
             yield return null;
         }
 
-        // ã≠êßìIÇ…0
-        fadeImage.color = new Color(
-            fadeImage.color.r,
-            fadeImage.color.g,
-            fadeImage.color.b,
-            0f
-        );
+
+        Debug.Log("ñæÇÈÇ≠Ç»Ç¡ÇΩ");
+
     }
 }

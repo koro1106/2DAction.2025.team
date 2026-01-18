@@ -5,7 +5,8 @@ public class PlayerRespawn : MonoBehaviour
 {
     private Vector3 currentSavePoint;
     public ScreenFader screenFader;
-
+    public KillZone killZone;
+    public PlayerHP playerHP;
     void Start()
     {
         currentSavePoint = transform.position;
@@ -14,7 +15,7 @@ public class PlayerRespawn : MonoBehaviour
     public void SetSavePoint(Vector3 newSavePoint)
     {
         currentSavePoint = newSavePoint;
-        Debug.Log("新しいセーブポイント確保: " + newSavePoint);
+        //   Debug.Log("新しいセーブポイント確保: " + newSavePoint);
     }
 
     public void Die()
@@ -28,13 +29,14 @@ public class PlayerRespawn : MonoBehaviour
         yield return StartCoroutine(screenFader.FadeOut());
 
         // リスポーン
+        Debug.Log("今のせーぶぽいんと" + currentSavePoint);
         transform.position = currentSavePoint;
 
         // HP回復
-        PlayerHP hp = GetComponent<PlayerHP>();
-        if (hp != null)
+        if (playerHP == null)
         {
-            hp.ResetHP();
+            Debug.Log("HP回復");
+            playerHP.ResetHP();
         }
 
         // 画面明転
