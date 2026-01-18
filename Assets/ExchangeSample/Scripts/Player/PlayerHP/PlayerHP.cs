@@ -14,7 +14,7 @@ public class PlayerHP : MonoBehaviour
 
     private bool isDead = false;
 
-    PlayerRespawn respawn;
+    public PlayerRespawn respawn;
 
     void Awake()
     {
@@ -28,7 +28,6 @@ public class PlayerHP : MonoBehaviour
     void Start()
     {
         currentHP = maxHP;
-        respawn = GetComponent<PlayerRespawn>();
         if (hpSlider != null)
         {
             hpSlider.maxValue = maxHP;
@@ -55,14 +54,14 @@ public class PlayerHP : MonoBehaviour
         if (isDead) return;
         isDead = true;
         // Respawn に死亡を通知
-        if (respawn != null)
-        {
-            respawn.Die();
-        }
-        else
-        {
-            Debug.LogError("PlayerRespawn が付いていません！");
-        }
+        respawn.Die();
+        //if (respawn != null)
+        //{
+        //}
+        //else
+        //{
+        //    Debug.LogError("PlayerRespawn が付いていません！");
+        //}
     }
 
     public void ResetHP()
