@@ -16,6 +16,9 @@ public class PlayerRespawn : MonoBehaviour
     {
         currentSavePoint = newSavePoint;
         //   Debug.Log("新しいセーブポイント確保: " + newSavePoint);
+
+        if (playerHP == null)
+            playerHP = GetComponent<PlayerHP>();
     }
 
     public void Die()
@@ -37,6 +40,10 @@ public class PlayerRespawn : MonoBehaviour
         {
             Debug.Log("HP回復");
             playerHP.ResetHP();
+        }
+        else
+        {
+            Debug.LogError("PlayerHP が設定されていません");
         }
 
         // 画面明転

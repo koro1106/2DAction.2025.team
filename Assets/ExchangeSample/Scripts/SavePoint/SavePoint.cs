@@ -8,11 +8,16 @@ public class SavePoint : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            PlayerRespawn player = collision.GetComponent<PlayerRespawn>();
-            if (player != null)
-            {
-                player.SetSavePoint(transform.position);
-            }
+            if (!collision.CompareTag("Player")) return;
+
+            PlayerRespawn respawn = collision.GetComponent<PlayerRespawn>();
+            PlayerStateController state = collision.GetComponent<PlayerStateController>();
+
+            if (respawn == null || state == null) return;
+
+            // 気体・液体・固体すべてでセーブ
+            respawn.SetSavePoint(transform.position);
+            Debug.Log("セーブ更新 : " + state.currentState);
         }
     }
 }
