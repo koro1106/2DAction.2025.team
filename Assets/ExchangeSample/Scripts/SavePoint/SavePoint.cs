@@ -1,23 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using ExchangeSample.Scripts;   // ★追加
 
 public class SavePoint : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
-        {
-            if (!collision.CompareTag("Player")) return;
+        if (!collision.CompareTag("Player")) return;
 
-            PlayerRespawn respawn = collision.GetComponent<PlayerRespawn>();
-            PlayerStateController state = collision.GetComponent<PlayerStateController>();
+        PlayerRespawn respawn =
+            collision.GetComponentInParent<PlayerRespawn>();
 
-            if (respawn == null || state == null) return;
+        if (respawn == null) return;
 
-            // 気体・液体・固体すべてでセーブ
-            respawn.SetSavePoint(transform.position);
-            Debug.Log("セーブ更新 : " + state.currentState);
-        }
+        respawn.SetSavePoint(transform.position);
     }
 }

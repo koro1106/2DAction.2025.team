@@ -3,36 +3,28 @@ using UnityEngine.UI;
 
 public class PlayerHP : MonoBehaviour
 {
-    public static PlayerHP Instance; // どの形態からも参照できる
-
-    [Header("HP設定")]
     public float maxHP = 100f;
     public float currentHP;
 
-    [Header("UI")]
     public Slider hpSlider;
 
     private bool isDead = false;
 
     public PlayerRespawn respawn;
 
-    void Awake()
-    {
-        // シングルトン
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-    }
-
     void Start()
     {
         currentHP = maxHP;
+
         if (hpSlider != null)
         {
             hpSlider.maxValue = maxHP;
             hpSlider.value = currentHP;
         }
+
+        // ★変更点：自動取得
+        if (respawn == null)
+            respawn = GetComponent<PlayerRespawn>();
     }
 
     public void Damage(float damage)
@@ -40,7 +32,7 @@ public class PlayerHP : MonoBehaviour
         if (isDead) return;
 
         currentHP -= damage;
-        currentHP = Mathf.Max(currentHP, 0f);
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
         if (hpSlider != null)
             hpSlider.value = currentHP;
@@ -51,21 +43,21 @@ public class PlayerHP : MonoBehaviour
 
     void Die()
     {
+        // ★変更点：死亡は1回だけ
         if (isDead) return;
+
         isDead = true;
-        // Respawn に死亡を通知
-        respawn.Die();
-        //if (respawn != null)
-        //{
-        //}
-        //else
-        //{
-        //    Debug.LogError("PlayerRespawn が付いていません！");
-        //}
+
+        // ★変更点：Respawnにだけ任せる
+        if (respawn != null)
+            respawn.Die();
+        else
+            Debug.LogError("PlayerRespawn が設定されていません");
     }
 
     public void ResetHP()
     {
+        // ★変更点：復活用
         currentHP = maxHP;
         isDead = false;
 

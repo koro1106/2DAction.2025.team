@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class GameClearTrigger : MonoBehaviour
-{
-    public GameClearEffect clearEffect;
+//public class GameClearTrigger : MonoBehaviour
+//{
+//    public GameClearEffect clearEffect;
 
-   private void OnTrrigerEnter2D(Collider2D collision)
-    {
-        if(collision.GetComponent<GasPlayer>() != null)
-        {
-            Debug.Log("ゲームクリア");
-            clearEffect.ShowEffect();
-        }
-    }
-}
+//   private void OnTrrigerEnter2D(Collider2D collision)
+//    {
+//        if(collision.GetComponent<GasPlayer>() != null)
+//        {
+//            Debug.Log("ゲームクリア");
+//            clearEffect.ShowEffect();
+//        }
+//    }
+//}
