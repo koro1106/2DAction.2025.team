@@ -1,21 +1,19 @@
+using System;
 using System.Collections;
 using UnityEngine;
-
 public class PlayerRespawn : MonoBehaviour
 {
     private Vector3 currentSavePoint;
+
     public ScreenFader screenFader;
-    public KillZone killZone;
     public PlayerHP playerHP;
+
+    // ★追加：Gas用死亡エフェクト
+    public GameObject gasDeathParticle;
+
     void Start()
     {
         currentSavePoint = transform.position;
-    }
-
-    public void SetSavePoint(Vector3 newSavePoint)
-    {
-        currentSavePoint = newSavePoint;
-        //   Debug.Log("新しいセーブポイント確保: " + newSavePoint);
 
         if (playerHP == null)
             playerHP = GetComponent<PlayerHP>();
@@ -28,25 +26,35 @@ public class PlayerRespawn : MonoBehaviour
 
     IEnumerator RespawnCoroutine()
     {
-        // 画面暗転
-        yield return StartCoroutine(screenFader.FadeOut());
+        // ★追加：死亡時エフェクト（Gasが有効なときだけ）
+        if (gasDeathParticle != null)
+        {
+            // 子オブジェクトに GasPlayer が有効なら Gas死亡
+            GasPlayer gas = GetComponentInChildren<GasPlayer>(false);
+            if (gas != null && gas.gameObject.activeInHierarchy)
+            {
+                Instantiate(gasDeathParticle, gas.transform.position, Quaternion.identity);
+            }
+        }
 
-        // リスポーン
-        Debug.Log("今のせーぶぽいんと" + currentSavePoint);
+        // フェードアウト
+        if (screenFader != null)
+            yield return StartCoroutine(screenFader.FadeOut());
+
+        // ★復活位置
         transform.position = currentSavePoint;
 
-        // HP回復
-        if (playerHP == null)
-        {
-            Debug.Log("HP回復");
-            playerHP.ResetHP();
-        }
-        else
-        {
-            Debug.LogError("PlayerHP が設定されていません");
-        }
+        // HP全回復
+        playerHP.ResetHP();
 
-        // 画面明転
-        yield return StartCoroutine(screenFader.FadeIn());
+        // フェードイン
+        if (screenFader != null)
+            yield return StartCoroutine(screenFader.FadeIn());
+    }
+    // ★セーブポイント更新（本実装）
+    public void SetSavePoint(Vector3 position)
+    {
+        currentSavePoint = position;
+        Debug.Log("SavePoint 更新: " + position);
     }
 }
