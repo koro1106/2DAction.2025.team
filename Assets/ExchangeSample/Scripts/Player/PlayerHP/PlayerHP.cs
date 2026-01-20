@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,8 @@ public class PlayerHP : MonoBehaviour
     private bool isDead = false;
 
     public PlayerRespawn respawn;
+
+    private HashSet<int> healedSavePoints = new HashSet<int>();
 
     void Start()
     {
@@ -63,5 +66,29 @@ public class PlayerHP : MonoBehaviour
 
         if (hpSlider != null)
             hpSlider.value = currentHP;
+    }
+
+    // SavePoint 到達時に呼ばれる
+    public void TryHealAtSavePoint(int savePointID)
+    {
+        // すでにこの SavePoint で回復済みなら何もしない
+        if (healedSavePoints.Contains(savePointID))
+            return;
+
+        // ★ 初回のみ回復
+        ResetHP();
+
+        healedSavePoints.Add(savePointID);
+
+        Debug.Log($"SavePoint {savePointID}：HP回復（初回のみ）");
+    }
+
+    // ----------------------------
+    // 死亡時に呼ばれる処理
+    // ----------------------------
+    public void OnPlayerDead()
+    {
+        //  死んでも回復済み情報はリセットしない
+        // 「死ぬまで1回」が守られる
     }
 }
