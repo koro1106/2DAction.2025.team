@@ -24,8 +24,14 @@ public class FadeTitle : MonoBehaviour
     [SerializeField] private PlayableDirector clearC;
     [SerializeField] private PlayableDirector clearD;
 
+    [SerializeField] private PlayerHP playerHP;
+    [SerializeField] private Slider slider;
+
+
     public void OnTitleButton()
     {
+        playerHP.currentHP = playerHP.maxHP; // HP100‚É
+        slider.value = 100;
         StartCoroutine(FadeSequence());
         // ƒ^ƒCƒ€ƒ‰ƒCƒ“’âŽ~‚·‚é
         clearA.Stop();
