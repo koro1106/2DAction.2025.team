@@ -43,6 +43,8 @@ public class PlayerRespawn : MonoBehaviour
 
         // •œŠˆˆÊ’u
         transform.position = currentSavePoint;
+        Debug.Log(currentSavePoint);
+
 
         // HP‘S‰ñ•œ
         playerHP.ResetHP();
