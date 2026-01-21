@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +15,7 @@ namespace ExchangeSample.Scripts
         [SerializeField] private List<GameObject> CharacterList;
         private CharacterType characterType;
 
+        public AudioManager audioManager;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -41,12 +41,15 @@ namespace ExchangeSample.Scripts
             {
                 case "ToLiquid":
                     characterType = CharacterType.Liquid;
+                    audioManager.audioSource.PlayOneShot(audioManager.chengePlayer);
                     break;
                 case "ToSolid":
                     characterType = CharacterType.Solid;
+                    audioManager.audioSource.PlayOneShot(audioManager.chengePlayer);
                     break;
                 case "ToGas":
                     characterType = CharacterType.Gas;
+                    audioManager.audioSource.PlayOneShot(audioManager.chengePlayer);
                     break;
             }
 

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.UI;
 /// <summary>
 /// クリア画面でタイトルボタン押したときに
 /// フェードしてタイトルに移動クラス
@@ -17,10 +19,19 @@ public class FadeTitle : MonoBehaviour
 
     [SerializeField] private Transform startPoint; // スタート位置
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private PlayableDirector clearA; // タイムライン
+    [SerializeField] private PlayableDirector clearB;
+    [SerializeField] private PlayableDirector clearC;
+    [SerializeField] private PlayableDirector clearD;
+
     public void OnTitleButton()
     {
         StartCoroutine(FadeSequence());
-        Debug.Log("ボタン押された");
+        // タイムライン停止する
+        clearA.Stop();
+        clearB.Stop();
+        clearC.Stop();
+        clearD.Stop();
     }
     public IEnumerator FadeSequence()
     {

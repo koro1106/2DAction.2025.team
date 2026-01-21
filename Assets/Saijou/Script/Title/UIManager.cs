@@ -7,12 +7,13 @@ public class UIManager : MonoBehaviour
     public GameObject options;
     public StartPerformance startPf;
     public UIMove move;
+    public AudioManager audioManager;
 
-   
-    
     public void OnUserGideButton()
     {
         move.upMoving = true;
+        audioManager.audioSource.PlayOneShot(audioManager.userGide);
+
     }
     public void OnUserGideBackButton()
     {
@@ -22,6 +23,6 @@ public class UIManager : MonoBehaviour
     public void OnStartButton()
     {
         startPf.GameStart();
-        Debug.Log("スタートボタン押された");
+        audioManager.audioSource.PlayOneShot(audioManager.start);
     }
 }
