@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.SocialPlatforms.Impl;
 /// <summary>
 /// クリア演出クラス
 /// </summary>
@@ -11,8 +10,9 @@ public class ClearPerformance : MonoBehaviour
     [SerializeField] private PlayableDirector clearB;
     [SerializeField] private PlayableDirector clearC;
     [SerializeField] private PlayableDirector clearD; // 一番評価引くい
-
+    
     [SerializeField] private GameObject player;
+    [SerializeField] private PlayerHP　playerHP;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,15 +20,12 @@ public class ClearPerformance : MonoBehaviour
 
         clearD.Play();
 
-        //if (hp > 1000) clearA.Play();
-        //else if (hp > 500) clearB.Play();
-        //else if (hp > 100) clearC.Play();
-        //else clearD.Play();
-
+        if (playerHP.currentHP >= 80) clearA.Play();
+        else if (playerHP.currentHP >= 50) clearB.Play();
+        else if (playerHP.currentHP >= 30) clearC.Play();
+        else if(playerHP.currentHP < 30) clearD.Play();
       
         // プレイヤーを無効化
         player.SetActive(false);
     }
-
-   
 }

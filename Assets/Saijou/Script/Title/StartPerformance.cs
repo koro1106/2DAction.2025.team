@@ -11,7 +11,7 @@ public class StartPerformance : MonoBehaviour
     public CanvasGroup uiCanvasGroup_Title; // TitileUIのCanvasGroup
     public CanvasGroup uiCanvasGroup_Seeson; // 季節UIのCanvasGroup
     private float fadeSpeed = 0.5f; // フェード速度
-    private bool isFading = false; // フェードが開始されたかどうか
+    private bool isStart = false; // ゲーム開始されたかどうか
     private bool isMovingCamera = false; // カメラ移動が開始されたかどうか
 
     [SerializeField] private GameObject player; // プレイヤー
@@ -22,8 +22,8 @@ public class StartPerformance : MonoBehaviour
     }
     private void Update()
     {
-        //　ゲーム開始ボタンでフェードアウト開始
-        if(isFading && !preformanceFinished)
+        //　ゲーム開始ボタンでタイトルUIフェードアウト開始
+        if(isStart && !preformanceFinished)
         {
             // UIのアルファ値を減少
             uiCanvasGroup_Title.alpha = Mathf.MoveTowards(uiCanvasGroup_Title.alpha, 0f, fadeSpeed * Time.deltaTime);
@@ -31,11 +31,23 @@ public class StartPerformance : MonoBehaviour
             // UIが透明になったらフェード終了
             if(uiCanvasGroup_Title.alpha == 0f)
             {
-                isFading = false;
+                isStart = false;
             }
         }
 
-        if (preformanceFinished) uiCanvasGroup_Title.alpha = 1f; // フェード終わったら１に戻す
+        //　ゲーム開始ボタンでゲームUIフェードイン開始
+        if(isStart && !preformanceFinished)
+        {
+            uiCanvasGroup_Seeson.alpha = Mathf.MoveTowards(uiCanvasGroup_Seeson.alpha, 1f, fadeSpeed * Time.deltaTime);
+
+            // UIが写ったら終了
+            if(uiCanvasGroup_Seeson.alpha == 1f)
+            {
+                isStart = true;
+            }
+        }
+
+        if (preformanceFinished) uiCanvasGroup_Title.alpha = 1f; // タイトル演出終わったら１に戻す
 
         //　ゲーム開始ボタンでカメラ移動開始
         if (isMovingCamera && !preformanceFinished)
@@ -61,7 +73,7 @@ public class StartPerformance : MonoBehaviour
         ResetPerformance(); // リセット
 
       // スタートボタン押されたらフェード開始
-       isFading = true;
+       isStart = true;
        isMovingCamera = true;
 
         // プレイヤー表示
@@ -72,7 +84,7 @@ public class StartPerformance : MonoBehaviour
     void ResetPerformance()
     {
         preformanceFinished = false;
-        isFading = false;
+        isStart = false;
         isMovingCamera = false;
     }
 }
