@@ -6,9 +6,12 @@ public class SavePoint : MonoBehaviour
     [Header("SavePoint ID（ユニーク）")]
     public int savePointID;
 
+    public AudioManager audioManager;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
+        
+        audioManager.audioSource.PlayOneShot(audioManager.savePoint); //SE
 
         PlayerRespawn respawn =
             collision.GetComponentInParent<PlayerRespawn>();

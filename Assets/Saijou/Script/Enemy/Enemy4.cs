@@ -13,6 +13,8 @@ public class Enemy4 : MonoBehaviour
     private SpriteRenderer sr;
     private bool isGround = false; // ’n–Ê”»’è
     private float timer = 0f;
+
+    public AudioManager audioManager;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,6 +36,8 @@ public class Enemy4 : MonoBehaviour
         // ‰æ–Ê‚ÉŒ©‚¦‚½‚çˆÚ“®ŠJŽn
         if (sr.isVisible)
         {
+            audioManager.audioSource.PlayOneShot(audioManager.dolphin);
+
             timer = 0f;
             isGround = false;
 

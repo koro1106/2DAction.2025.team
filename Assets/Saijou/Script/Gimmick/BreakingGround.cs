@@ -15,6 +15,7 @@ public class BreakingGround : MonoBehaviour
     private Rigidbody2D rb;
     private bool isFalling = false;
     private Vector3 originalPos;
+    public AudioManager audioManager;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -26,6 +27,7 @@ public class BreakingGround : MonoBehaviour
         // プレイヤーが踏んだか
         if(!isFalling && collision.gameObject.CompareTag("Player"))
         {
+            audioManager.audioSource.PlayOneShot(audioManager.breakGround);
             isFalling = true;
             StartCoroutine(ShakeAndFall());
         }
