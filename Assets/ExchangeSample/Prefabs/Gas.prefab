@@ -196,15 +196,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e889ea07a4f0954a8d922f3704ee2ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 50
-  currentHP: 0
   normalDamagePerSecond: 1
   wallDamagePerSecond: 5
   gasParticles: {fileID: 0}
   maxEmissionRate: 100
   minEmissionRate: 5
-  deathParticlePrefab: {fileID: 3167219660506253581, guid: 5ea0a2e42bf50894dae245d9d98085c8, type: 3}
-  hpSlider: {fileID: 0}
 --- !u!114 &8173320342460307315
 MonoBehaviour:
   m_ObjectHideFlags: 0

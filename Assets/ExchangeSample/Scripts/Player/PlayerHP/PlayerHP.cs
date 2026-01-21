@@ -46,12 +46,12 @@ public class PlayerHP : MonoBehaviour
 
     void Die()
     {
-        // ★変更点：死亡は1回だけ
+        //変更点：死亡は1回だけ
         if (isDead) return;
 
         isDead = true;
 
-        // ★変更点：Respawnにだけ任せる
+        // 変更点：Respawnにだけ任せる
         if (respawn != null)
             respawn.Die();
         else
@@ -60,7 +60,7 @@ public class PlayerHP : MonoBehaviour
 
     public void ResetHP()
     {
-        // ★変更点：復活用
+        // 変更点：復活用
         currentHP = maxHP;
         isDead = false;
 
@@ -75,7 +75,7 @@ public class PlayerHP : MonoBehaviour
         if (healedSavePoints.Contains(savePointID))
             return;
 
-        // ★ 初回のみ回復
+        // 初回のみ回復
         ResetHP();
 
         healedSavePoints.Add(savePointID);

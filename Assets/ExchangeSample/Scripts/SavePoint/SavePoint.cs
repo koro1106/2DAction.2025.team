@@ -20,7 +20,7 @@ public class SavePoint : MonoBehaviour
         // セーブ位置は毎回更新
         respawn.SetSavePoint(transform.position);
 
-        // ★ 回復判定は Player 側に任せる
+        // 回復判定は Player 側に任せる
         hp.TryHealAtSavePoint(savePointID);
     }
 }

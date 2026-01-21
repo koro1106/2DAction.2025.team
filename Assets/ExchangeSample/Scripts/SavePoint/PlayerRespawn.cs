@@ -8,7 +8,7 @@ public class PlayerRespawn : MonoBehaviour
     public ScreenFader screenFader;
     public PlayerHP playerHP;
 
-    // ★追加：Gas用死亡エフェクト
+    // Gas用死亡エフェクト
     public GameObject gasDeathParticle;
 
     void Start()
@@ -26,7 +26,7 @@ public class PlayerRespawn : MonoBehaviour
 
     IEnumerator RespawnCoroutine()
     {
-        // ★追加：死亡時エフェクト（Gasが有効なときだけ）
+        // 死亡時エフェクト（Gasが有効なときだけ）
         if (gasDeathParticle != null)
         {
             // 子オブジェクトに GasPlayer が有効なら Gas死亡
@@ -41,7 +41,7 @@ public class PlayerRespawn : MonoBehaviour
         if (screenFader != null)
             yield return StartCoroutine(screenFader.FadeOut());
 
-        // ★復活位置
+        // 復活位置
         transform.position = currentSavePoint;
 
         // HP全回復
@@ -51,7 +51,7 @@ public class PlayerRespawn : MonoBehaviour
         if (screenFader != null)
             yield return StartCoroutine(screenFader.FadeIn());
     }
-    // ★セーブポイント更新（本実装）
+    // セーブポイント更新（本実装）
     public void SetSavePoint(Vector3 position)
     {
         currentSavePoint = position;
