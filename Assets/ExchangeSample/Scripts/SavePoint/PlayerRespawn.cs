@@ -43,7 +43,7 @@ public class PlayerRespawn : MonoBehaviour
 
         // •œŠˆˆÊ’u
         transform.position = currentSavePoint;
-        Debug.Log(currentSavePoint);
+        Debug.Log("•œŠˆˆÊ’u"+currentSavePoint);
 
 
         // HP‘S‰ñ•œ
