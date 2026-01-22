@@ -9,7 +9,7 @@ public class UIMove : MonoBehaviour
     public float startX = 0f;   // 開始位置
     public float startY = -1100f;
     public float targetX = 0f; // 目標位置
-    public float targetY = 0f;
+    public float targetY = 200f;
     public float speed = 50f;   // 移動スピード
     public bool upMoving = false;
     public bool downMoving = false;
