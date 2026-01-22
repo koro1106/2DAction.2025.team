@@ -49,12 +49,19 @@ namespace ExchangeSample.Scripts
                     break;
                 case "ToGas":
                     characterType = CharacterType.Gas;
-                    audioManager.audioSource.PlayOneShot(audioManager.chengePlayer);
+                    audioManager.audioSource.PlayOneShot(audioManager.chengePlayer); 
                     break;
             }
 
             CharacterList[(int)characterType].SetActive(true);
             CharacterList[(int)characterType].transform.position = position;
+
+            //  PlayerHPÇ…åªç›â“ì≠íÜÇÃPlayerObjectÇê›íË(HORIKOSHI Masahiro)
+            var playerHP = GetComponent<PlayerHP>();
+            if (playerHP != null)
+            {
+                playerHP.CurrentCharacter = CharacterList[(int)characterType];
+            }
         }
     }
 }

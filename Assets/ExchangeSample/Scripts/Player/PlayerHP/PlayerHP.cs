@@ -11,9 +11,18 @@ public class PlayerHP : MonoBehaviour
 
     private bool isDead = false;
 
+#if false       //  クラスで管理しないように変更(HORIKOSHI Masahiro)
     public PlayerRespawn respawn;
+#endif
 
     private HashSet<int> healedSavePoints = new HashSet<int>();
+
+    //  現在稼働中のPlayerObject(HORIKOSHI Masahiro)
+    private GameObject currentCharacter;
+    public GameObject CurrentCharacter
+    {
+        set => currentCharacter = value;
+    }
 
     void Start()
     {
@@ -25,9 +34,11 @@ public class PlayerHP : MonoBehaviour
             hpSlider.value = currentHP;
         }
 
+#if false       //  ここで取得しないように変更(HORIKOSHI Masahiro)
         // ★変更点：自動取得
         if (respawn == null)
             respawn = GetComponent<PlayerRespawn>();
+#endif
     }
 
     public void Damage(float damage)
@@ -52,6 +63,7 @@ public class PlayerHP : MonoBehaviour
         isDead = true;
 
         // 変更点：Respawnにだけ任せる
+        var respawn = currentCharacter.GetComponent<PlayerRespawn>();   //  ここで取得するように変更(HORIKOSHI Masahiro)
         if (respawn != null)
             respawn.Die();
         else
@@ -65,6 +77,7 @@ public class PlayerHP : MonoBehaviour
         isDead = false;
 
         if (hpSlider != null)
+
             hpSlider.value = currentHP;
     }
 
