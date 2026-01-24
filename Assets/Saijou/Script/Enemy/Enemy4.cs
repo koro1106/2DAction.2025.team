@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy4 : MonoBehaviour
@@ -30,6 +28,15 @@ public class Enemy4 : MonoBehaviour
             Jump();
         }
 
+        // Playerが左側にいるかどうかで画像を反転
+        if (player.position.x < transform.position.x)
+        {
+            sr.flipX = true; // 左側にいるから反転
+        }
+        else
+        {
+            sr.flipX = false; // 右側にいるから正方向
+        }
     }
     void Jump()
     {
@@ -44,7 +51,7 @@ public class Enemy4 : MonoBehaviour
             // プレイヤーの方向に向く
             float dir = Mathf.Sign(player.position.x - transform.position.x);
 
-            // 力加える
+            // 水平方向の移動
             rb.velocity = new Vector2(dir * horizontalPower, jumpForce);
         }
     }
