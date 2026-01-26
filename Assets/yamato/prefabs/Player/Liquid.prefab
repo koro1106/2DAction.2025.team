@@ -10795,7 +10795,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1319173810789237739}
-  - component: {fileID: 111434107913842981}
   - component: {fileID: 8436452585897152959}
   - component: {fileID: 7251873346657212874}
   m_Layer: 8
@@ -10877,20 +10876,6 @@ Transform:
   - {fileID: 4579485986603397107}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &111434107913842981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9124672398923846755}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7d8f63adee6e784db95c32bc06703c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  jumpForce: 3
 --- !u!50 &8436452585897152959
 Rigidbody2D:
   serializedVersion: 4
@@ -10936,6 +10921,8 @@ MonoBehaviour:
   shootCooldown: 0.5
   gravityScale: 1
   maxInitialSpeed: 20
+  startPerformance: {fileID: 0}
+  bulletSpeed: 10
 --- !u!1001 &2229951853196954324
 PrefabInstance:
   m_ObjectHideFlags: 0
