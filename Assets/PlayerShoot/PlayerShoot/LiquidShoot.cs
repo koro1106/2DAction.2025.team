@@ -1,59 +1,62 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-public class LiquidShoot : MonoBehaviour
+public class LiquidShooter : MonoBehaviour
 {
     public GameObject waterBallPrefab;
     public Transform shootPoint;
-    public RectTransform crossHairRect;
-    public float shootPower = 8f;
+    public Transform aimPoint; 
 
-   // private PlayerState state;
+    public float shootInterval = 0.5f;
+    public float apexTime = 0.6f; // é ‚ç‚¹ã«åˆ°é”ã™ã‚‹æ™‚é–“
 
-    void Start()
-    {
-        //state = GetComponent<PlayerState>();
-    }
+    public StartPerformance startPerformance;
+    float timer;
+
+    float nextShootTime;
 
     void Update()
     {
-        //if (state.currentState != PlayerState.State.Liquid) return;
-
-        if (Input.GetMouseButtonDown(0))
+        if (!startPerformance.preformanceFinished) return;
+        timer += Time.deltaTime;
+        if (Input.GetMouseButtonDown(0) && Time.time >= nextShootTime)
         {
             Shoot();
+            nextShootTime = Time.time + shootInterval;
         }
     }
 
     void Shoot()
     {
-        // UIƒNƒƒXƒwƒA ¨ ƒXƒNƒŠ[ƒ“À•W
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(
-            null,
-            crossHairRect.position
-        );
-
-        // š ‚±‚±‚ªd—vFZ‹——£‚ğ³‚µ‚­w’è
-        float zDistance = -Camera.main.transform.position.z;
-
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(
-            new Vector3(screenPos.x, screenPos.y, zDistance)
-        );
-        worldPos.z = 0f;
+        Vector2 start = shootPoint.position;
+        Vector2 target = aimPoint.position;
 
         GameObject ball = Instantiate(
             waterBallPrefab,
-            shootPoint.position,
+            start,
             Quaternion.identity
         );
 
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
 
-        Vector2 dir = (worldPos - shootPoint.position);
+        float gravity = Mathf.Abs(Physics2D.gravity.y * rb.gravityScale);
 
-        rb.velocity = dir.normalized * shootPower;
+        // é«˜ã•å·®ï¼ˆé ‚ç‚¹ï¼‰
+        float height = target.y - start.y;
 
-        // ƒfƒoƒbƒO—piÔü‚ÅŠm”Fj
-        Debug.DrawLine(shootPoint.position, worldPos, Color.red, 1f);
+        // ä¸‹ã«ã‚ã‚‹ã¨ãã®ä¿é™º
+        if (height < 0.5f)
+            height = 0.5f;
+
+        // Yåˆé€Ÿï¼ˆé«˜ã•ã‹ã‚‰æ±ºã‚ã‚‹ï¼‰
+        float velocityY = Mathf.Sqrt(2f * gravity * height);
+
+        // é ‚ç‚¹ã«åˆ°é”ã™ã‚‹æ™‚é–“
+        float timeToApex = velocityY / gravity;
+
+        // Xåˆé€Ÿï¼ˆé ‚ç‚¹æ™‚ã« X ãŒåˆã†ï¼‰
+        float velocityX = (target.x - start.x) / timeToApex;
+
+        rb.velocity = new Vector2(velocityX, velocityY);
     }
 
 }

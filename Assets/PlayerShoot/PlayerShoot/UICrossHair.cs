@@ -1,26 +1,22 @@
 using UnityEngine;
 
-public class UICrossHair : MonoBehaviour
+public class CrossHairUI : MonoBehaviour
 {
-    RectTransform rect;
-    Canvas canvas;
-
-    void Awake()
-    {
-        rect = GetComponent<RectTransform>();
-        canvas = GetComponentInParent<Canvas>();
-    }
+    public Transform aimPoint;
+    public RectTransform crossHairRect;
+    public Canvas canvas;
 
     void Update()
     {
-        Vector2 pos;
+        Vector3 screen = Camera.main.WorldToScreenPoint(aimPoint.position);
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform,
-            Input.mousePosition,
+            screen,
             canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-            out pos
+            out Vector2 pos
         );
 
-        rect.localPosition = pos;
+        crossHairRect.localPosition = pos;
     }
 }
