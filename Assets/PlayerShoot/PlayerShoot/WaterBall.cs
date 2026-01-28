@@ -11,6 +11,11 @@ public class WaterBall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Ground ‚É“–‚½‚Á‚½‚çÁ‚·
+        if (other.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
         if (other.CompareTag("Enemy"))
         {
             Debug.Log("“G‚É–½’†I");
