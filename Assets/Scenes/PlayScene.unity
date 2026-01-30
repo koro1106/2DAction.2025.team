@@ -38543,6 +38543,10 @@ PrefabInstance:
       propertyPath: m_Distance
       value: 0.52276844
       objectReference: {fileID: 0}
+    - target: {fileID: 4760952535446643838, guid: 5232c42497debec43b509566ae3882f1, type: 3}
+      propertyPath: m_Radius
+      value: 0.18
+      objectReference: {fileID: 0}
     - target: {fileID: 4844984748491091361, guid: 5232c42497debec43b509566ae3882f1, type: 3}
       propertyPath: m_Distance
       value: 0.30700624
@@ -38613,7 +38617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5597300815070830901, guid: 5232c42497debec43b509566ae3882f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.19
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 5597300815070830901, guid: 5232c42497debec43b509566ae3882f1, type: 3}
       propertyPath: m_LocalPosition.z
