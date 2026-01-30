@@ -27341,7 +27341,7 @@ MonoBehaviour:
   frameTime: 0.1
   bulletPrefab: {fileID: 5336914274341933929, guid: c4b05cb8018ea6e4a8065982897549fe, type: 3}
   firePoint: {fileID: 830735765}
-  bulletVelocity: {x: -15, y: 5}
+  bulletVelocity: {x: -10, y: 5}
 --- !u!61 &1286925751
 BoxCollider2D:
   m_ObjectHideFlags: 0
