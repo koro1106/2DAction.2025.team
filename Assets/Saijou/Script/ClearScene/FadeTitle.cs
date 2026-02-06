@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 /// <summary>
 /// クリア画面でタイトルボタン押したときに
@@ -55,6 +56,7 @@ public class FadeTitle : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.transform.position = startPoint.position;
+        SceneManager.LoadScene("PlayerScene");
 
         // フェードイン(明るく)
         yield return StartCoroutine(Fade(1f, 0f));
