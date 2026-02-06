@@ -2,29 +2,85 @@
 
 public class LiquidShooter : MonoBehaviour
 {
-    public GameObject waterBallPrefab;
-    public Transform shootPoint;
-    public Transform aimPoint; 
+    // ================================
+    // 発射設定
+    // ================================
+    public GameObject waterBallPrefab; // 水球Prefab
+    public Transform shootPoint;        // 発射位置
+    public Transform aimPoint;          // 狙い位置
 
+    // ================================
+    // クロスヘアUI
+    // ================================
+    public GameObject crossHair;
+
+    // ================================
+    // 連射制御
+    // ================================
     public float shootInterval = 0.5f;
-    public float apexTime = 0.6f; // 頂点に到達する時間
 
+    // ================================
+    // HP消費
+    // ================================
+    public float shootHpCost = 5f; // ★撃つたびに減るHP
+
+    // ================================
+    // スタート演出管理
+    // ================================
     public StartPerformance startPerformance;
-    float timer;
 
-    float nextShootTime;
+    private float nextShootTime;
+
+    // HP管理
+    private PlayerHP playerHP;
+
+    // --------------------------------
+    // Liquid状態になった瞬間
+    // --------------------------------
+    void OnEnable()
+    {
+        if (crossHair != null)
+            crossHair.SetActive(true);
+
+        // 親から PlayerHP を取得
+        playerHP = GetComponentInParent<PlayerHP>();
+    }
+
+    // --------------------------------
+    // Liquid状態解除
+    // --------------------------------
+    void OnDisable()
+    {
+        if (crossHair != null)
+            crossHair.SetActive(false);
+    }
 
     void Update()
     {
-        if (!startPerformance.preformanceFinished) return;
-        timer += Time.deltaTime;
+        // スタート演出中は撃てない
+        if (!startPerformance.preformanceFinished)
+            return;
+
+        // 左クリック ＆ クールタイム
         if (Input.GetMouseButtonDown(0) && Time.time >= nextShootTime)
         {
+            // HPが足りないなら撃てない
+            if (playerHP != null && playerHP.currentHP <= shootHpCost)
+                return;
+
             Shoot();
+
+            // ★HP消費
+            if (playerHP != null)
+                playerHP.Damage(shootHpCost);
+
             nextShootTime = Time.time + shootInterval;
         }
     }
 
+    // ================================
+    // 水球発射
+    // ================================
     void Shoot()
     {
         Vector2 start = shootPoint.position;
@@ -38,25 +94,18 @@ public class LiquidShooter : MonoBehaviour
 
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
 
-        float gravity = Mathf.Abs(Physics2D.gravity.y * rb.gravityScale);
+        float gravity = Mathf.Abs(
+            Physics2D.gravity.y * rb.gravityScale
+        );
 
-        // 高さ差（頂点）
         float height = target.y - start.y;
-
-        // 下にあるときの保険
         if (height < 0.5f)
             height = 0.5f;
 
-        // Y初速（高さから決める）
         float velocityY = Mathf.Sqrt(2f * gravity * height);
-
-        // 頂点に到達する時間
         float timeToApex = velocityY / gravity;
-
-        // X初速（頂点時に X が合う）
         float velocityX = (target.x - start.x) / timeToApex;
 
         rb.velocity = new Vector2(velocityX, velocityY);
     }
-
 }
