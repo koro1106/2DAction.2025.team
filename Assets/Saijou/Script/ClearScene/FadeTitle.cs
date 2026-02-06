@@ -56,7 +56,7 @@ public class FadeTitle : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.transform.position = startPoint.position;
-        SceneManager.LoadScene("PlayerScene");
+        SceneManager.LoadScene("PlayScene");
 
         // フェードイン(明るく)
         yield return StartCoroutine(Fade(1f, 0f));
