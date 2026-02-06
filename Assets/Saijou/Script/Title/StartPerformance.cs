@@ -13,6 +13,7 @@ public class StartPerformance : MonoBehaviour
     private float fadeSpeed = 0.5f; // フェード速度
     private bool isStart = false; // ゲーム開始されたかどうか
     private bool isMovingCamera = false; // カメラ移動が開始されたかどうか
+    private bool cursorHidden = false; // カーソルを一度だけ消す用
 
     [SerializeField] private GameObject player; // プレイヤー
 
@@ -44,6 +45,7 @@ public class StartPerformance : MonoBehaviour
             if(uiCanvasGroup_Seeson.alpha == 1f)
             {
                 isStart = true;
+
             }
         }
 
@@ -63,6 +65,9 @@ public class StartPerformance : MonoBehaviour
                 titleUI.SetActive(false); // タイトルUI非表示
                 preformanceFinished = true; // スタート演出終了
                 isMovingCamera = false;         // 移動停止
+
+                // ここでマウスカーソルを消す
+                HideCursor();
             }
         }
        
@@ -86,5 +91,15 @@ public class StartPerformance : MonoBehaviour
         preformanceFinished = false;
         isStart = false;
         isMovingCamera = false;
+    }
+
+    void HideCursor()
+    {
+        if (cursorHidden) return;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        cursorHidden = true;
     }
 }
